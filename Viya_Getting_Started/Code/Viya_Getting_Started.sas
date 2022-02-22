@@ -1,6 +1,7 @@
 
 
 /* STANDARD SAS PROCESSING ON THE COMPUTE SERVER */
+/* SEE - WE CAN RUN BASE SAS CODE */
 proc print data=sashelp.cars (obs=10);
 run;
 
