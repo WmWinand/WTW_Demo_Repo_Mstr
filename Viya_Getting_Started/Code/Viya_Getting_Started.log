@@ -1,118 +1,85 @@
-524  %studio_hide_wrapper;
-605  
-606  
-607  /* STANDARD SAS PROCESSING ON THE COMPUTE SERVER */
-608  proc print data=sashelp.cars (obs=10);
-609  run;
+506  %studio_hide_wrapper;
+582  
+583  %studio_hide_wrapper;
+591  
+592  
+593  
+594  
+595  /* STANDARD SAS PROCESSING ON THE COMPUTE SERVER */
+596  /* SEE - WE CAN RUN BASE SAS CODE */
+597  proc print data=sashelp.cars (obs=10);
+598  run;
 
 NOTE: There were 10 observations read from the data set SASHELP.CARS.
 NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.06 seconds
-      cpu time            0.05 seconds
+      real time           0.07 seconds
+      cpu time            0.08 seconds
       
 
-610  
-611  /* START A CAS SESSION */
-612  cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US" metrics=false);
-NOTE: The session MYSESSION connected successfully to Cloud Analytic Services sasserver.demo.sas.com using port 5570. The UUID is 
-      b76f1848-20fc-7f4e-8784-202278e8eb8a. The user is sasdemo and the active caslib is CASUSER(sasdemo).
+599  
+600  /* START A CAS SESSION */
+601  cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US" metrics=false);
+NOTE: The session MYSESSION connected successfully to Cloud Analytic Services sas-cas-server-default-client using port 5570. The 
+      UUID is a4df036e-4c86-0e4f-96cb-a1a258ec7c2c. The user is sasdemo and the active caslib is CASUSER(sasdemo).
 NOTE: The SAS option SESSREF was updated with the value MYSESSION.
 NOTE: The SAS macro _SESSREF_ was updated with the value MYSESSION.
 NOTE: The session is using 0 workers.
 NOTE: 'CASUSER(sasdemo)' is now the active caslib.
 NOTE: The CAS statement request to update one or more session options for session MYSESSION completed.
+602  
+603  
+604  /* EXAMPLES OF CREATING OTHER CASLIBS */
+605  
+606  /* PATH */
+607  /* caslib cascsvs path="/mnt/WmWinand/data/myxlsxfiles/"  */
+608  /*    datasource=(srctype="path"); */
+609  
+610  /* HDFS */
+611  /* caslib Myvapublic path="/vapublic"  */
+612  /*                           datasource=(srctype="hdfs") global ;  */
 613  
-614  
-615  /* EXAMPLES OF CREATING OTHER CASLIBS */
-616  
-617  /* PATH */
-618  /* caslib cascsvs path="/mnt/WmWinand/data/myxlsxfiles/"  */
-619  /*    datasource=(srctype="path"); */
-620  
-621  /* HDFS */
-622  /* caslib Myvapublic path="/vapublic"  */
-623  /*                           datasource=(srctype="hdfs") global ;  */
-624  
-625  /* HADOOP */
-626  /* caslib Hadooplib desc="Hadoop Caslib"  */
-627  /*                datasource=(srctype="hadoop",                                 */
-628  /*                dataTransferMode="parallel", */
-629  /*                hadoopjarpath="Hadoo-jar-file-path", */
-630  /*                hadoopconfigdir="Hadoop-config-files-path", */
-631  /*                username="user-id", */
-632  /*                server="Hadoop-server-hostname", */
-633  /*                schema="schema-name") global; */
-634  
-635  /* SETTING UP A CASLIB TO AND AWS S3 BUCKET */
-636  /* caslib ms33 subdirs datasource=(srctype="s3" */
-637  /*                accesskeyid="AKIARPJ6X2NYDF5TYUFX" */
-638  /*                secretaccesskey="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" */
-639  /*                region="US_East" */
-640  /*                bucket="win562960andln" */
-641  /*                objectpath="wtw_files" */
-642  /*                usessl=false); */
-643  
-644  
-645  /* SET UP LIBRARY REFERENCES */
-646  libname mysas "/home/sasdemo/SAS Studio/DATA";
-NOTE: Libref MYSAS was successfully assigned as follows: 
-      Engine:        V9 
-      Physical Name: /home/sasdemo/SAS Studio/DATA
-647  libname mycas cas caslib=casuser;
+614  /* HADOOP */
+615  /* caslib Hadooplib desc="Hadoop Caslib"  */
+616  /*                datasource=(srctype="hadoop",                                 */
+617  /*                dataTransferMode="parallel", */
+618  /*                hadoopjarpath="Hadoo-jar-file-path", */
+619  /*                hadoopconfigdir="Hadoop-config-files-path", */
+620  /*                username="user-id", */
+621  /*                server="Hadoop-server-hostname", */
+622  /*                schema="schema-name") global; */
+623  
+624  /* SETTING UP A CASLIB TO AND AWS S3 BUCKET */
+625  /* caslib ms33 subdirs datasource=(srctype="s3" */
+626  /*                accesskeyid="AKIARPJ6X2NYDF5TYUFX" */
+627  /*                secretaccesskey="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" */
+628  /*                region="US_East" */
+629  /*                bucket="win562960andln" */
+630  /*                objectpath="wtw_files" */
+631  /*                usessl=false); */
+632  
+633  
+634  /* SET UP LIBRARY REFERENCES */
+635  libname mysas "/home/sasdemo/SAS Studio/DATA";
+NOTE: Library MYSAS does not exist.
+636  libname mycas cas caslib=casuser;
 NOTE: Libref MYCAS was successfully assigned as follows: 
       Engine:        CAS 
-      Physical Name: b76f1848-20fc-7f4e-8784-202278e8eb8a
-648  
-649  caslib _all_ list;
-NOTE: Session = MYSESSION Name = AdaptiveLearningData
-         Type = PATH
-         Description = Stores historical and learning tables created by Adaptive Learning agents.
-         Path = /opt/sas/viya/config/data/cas/default/adaptiveLearningData/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = AdaptiveLearningStore
-         Type = PATH
-         Description = Stores model analytic stores created by Adaptive Learning agents.
-         Path = /opt/sas/viya/config/data/cas/default/adaptiveLearningStore/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
+      Physical Name: a4df036e-4c86-0e4f-96cb-a1a258ec7c2c
+637  
+638  caslib _all_ list;
 NOTE: Session = MYSESSION Name = CASUSER(sasdemo)
          Type = PATH
          Description = Personal File System Caslib
-         Path = /home/sasdemo/casuser/
+         Path = /cas/data/caslibs/casuserlibraries/sasdemo/
          Definition = 
          Subdirs = Yes
          Local = No
          Active = Yes
          Personal = Yes
-NOTE: Session = MYSESSION Name = CPSAppData
-         Type = PATH
-         Description = Stores data for the planning service.
-         Path = /opt/sas/viya/config/data/cas/default/cpsAppData/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
 NOTE: Session = MYSESSION Name = Formats
          Type = PATH
          Description = Stores user defined formats.
-         Path = /opt/sas/viya/config/data/cas/default/formats/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = ModelOps
-         Type = PATH
-         Description = 
-         Path = /opt/sasinside/DemoData/DecisioningDemos/ModelOps/
+         Path = /cas/data/caslibs/formats/
          Definition = 
          Subdirs = No
          Local = No
@@ -120,8 +87,8 @@ NOTE: Session = MYSESSION Name = ModelOps
          Personal = No
 NOTE: Session = MYSESSION Name = ModelPerformanceData
          Type = PATH
-         Description = Library for Model Management performance objects.
-         Path = /opt/sas/viya/config/data/cas/default/modelMonitorLibrary/
+         Description = Stores performance data output for the Model Management service.
+         Path = /cas/data/caslibs/modelMonitorLibrary/
          Definition = 
          Subdirs = No
          Local = No
@@ -130,7 +97,7 @@ NOTE: Session = MYSESSION Name = ModelPerformanceData
 NOTE: Session = MYSESSION Name = Models
          Type = PATH
          Description = Stores models created by Visual Analytics for use in other analytics or SAS Studio.
-         Path = /opt/sas/viya/config/data/cas/default/models/
+         Path = /cas/data/caslibs/models/
          Definition = 
          Subdirs = No
          Local = No
@@ -139,7 +106,7 @@ NOTE: Session = MYSESSION Name = Models
 NOTE: Session = MYSESSION Name = Public
          Type = PATH
          Description = Shared and writeable caslib, accessible to all users.
-         Path = /opt/sas/viya/config/data/cas/default/public/
+         Path = /cas/data/caslibs/public/
          Definition = 
          Subdirs = No
          Local = No
@@ -148,124 +115,7 @@ NOTE: Session = MYSESSION Name = Public
 NOTE: Session = MYSESSION Name = QASMartStore
          Type = PATH
          Description = Stores quality analytic suite mart tables.
-         Path = /opt/sas/viya/config/data/cas/default/qasMartStore/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_act
-         Type = PATH
-         Description = Stores Actuals Calculation related Data Sets of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMActualsDataset/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_actsc
-         Type = PATH
-         Description = Stores Actuals Calculation related scratch tables of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMActualsDatasetScratch/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_arm
-         Type = PATH
-         Description = Stores output of Scoring and Actuals Results Calculation proces of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMAnalyticalResultMart/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_bkt
-         Type = PATH
-         Description = Stores Back Testing Data Sets of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMBacktestDataset/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_bktsc
-         Type = PATH
-         Description = Stores Back Testing related Scratch tables of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMBacktestDataSetScratch/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_dbsc
-         Type = PATH
-         Description = Stores Scratch tables created during execution of various processes of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMScratchData/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_mdl
-         Type = PATH
-         Description = Stores Risk Modeling Analytical Datasets
-         Path = /opt/sas/viya/config/data/cas/default/RMAnalyticalData/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_mdlsc
-         Type = PATH
-         Description = Stores Analytical Data Set building related Scratch tables of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMAnalyticalDatasetScratch/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_pbdst
-         Type = PATH
-         Description = Store table having published model.
-         Path = /opt/sas/viya/config/data/cas/default/RMPublishedDstn/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_perf
-         Type = PATH
-         Description = Stores Performance Monitoring related tables of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMPerformanceData/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_rptmr
-         Type = PATH
-         Description = Stores reporting data of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMReportingMart/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_scr
-         Type = PATH
-         Description = Stores Scoring related Data Sets of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMScoringDataset/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = rm_scrsc
-         Type = PATH
-         Description = Stores Scoring Data set building related Scratch tables of Risk Modeling Solution
-         Path = /opt/sas/viya/config/data/cas/default/RMScoringDatasetScratch/
+         Path = /cas/data/caslibs/qasMartStore/
          Definition = 
          Subdirs = No
          Local = No
@@ -274,16 +124,7 @@ NOTE: Session = MYSESSION Name = rm_scrsc
 NOTE: Session = MYSESSION Name = Samples
          Type = PATH
          Description = Stores sample data, supplied by SAS.
-         Path = /opt/sas/viya/config/data/cas/default/samples/
-         Definition = 
-         Subdirs = No
-         Local = No
-         Active = No
-         Personal = No
-NOTE: Session = MYSESSION Name = SGF20
-         Type = PATH
-         Description = 
-         Path = /opt/sasinside/DemoData/DecisioningDemos/SGF20/
+         Path = /cas/data/caslibs/samples/
          Definition = 
          Subdirs = No
          Local = No
@@ -292,607 +133,658 @@ NOTE: Session = MYSESSION Name = SGF20
 NOTE: Session = MYSESSION Name = SystemData
          Type = PATH
          Description = Stores application generated data, used for general reporting.
-         Path = /opt/sas/viya/config/data/cas/default/sysData/
+         Path = /cas/data/caslibs/sysData/
          Definition = 
          Subdirs = No
          Local = No
          Active = No
          Personal = No
 NOTE: Action caslib LIST completed for session MYSESSION.
-650  caslib _all_ assign;
+639  caslib _all_ assign;
 NOTE: A SAS Library associated with a caslib can only reference library member names that conform to SAS Library naming conventions.
-NOTE: CASLIB AdaptiveLearningData for session MYSESSION will not be mapped to SAS Library AdaptiveLearningData. The CASLIB name is 
-      not valid for use as a libref.
-NOTE: CASLIB AdaptiveLearningStore for session MYSESSION will not be mapped to SAS Library AdaptiveLearningStore. The CASLIB name 
-      is not valid for use as a libref.
 NOTE: CASLIB CASUSER(sasdemo) for session MYSESSION will be mapped to SAS Library CASUSER.
-NOTE: CASLIB CPSAppData for session MYSESSION will not be mapped to SAS Library CPSAppData. The CASLIB name is not valid for use as 
-      a libref.
 NOTE: CASLIB Formats for session MYSESSION will be mapped to SAS Library FORMATS.
-NOTE: CASLIB ModelOps for session MYSESSION will be mapped to SAS Library MODELOPS.
 NOTE: CASLIB ModelPerformanceData for session MYSESSION will not be mapped to SAS Library ModelPerformanceData. The CASLIB name is 
       not valid for use as a libref.
 NOTE: CASLIB Models for session MYSESSION will be mapped to SAS Library MODELS.
 NOTE: CASLIB Public for session MYSESSION will be mapped to SAS Library PUBLIC.
 NOTE: CASLIB QASMartStore for session MYSESSION will not be mapped to SAS Library QASMartStore. The CASLIB name is not valid for 
       use as a libref.
-NOTE: CASLIB SGF20 for session MYSESSION will be mapped to SAS Library SGF20.
 NOTE: CASLIB Samples for session MYSESSION will be mapped to SAS Library SAMPLES.
 NOTE: CASLIB SystemData for session MYSESSION will not be mapped to SAS Library SystemData. The CASLIB name is not valid for use as 
       a libref.
-NOTE: CASLIB rm_act for session MYSESSION will be mapped to SAS Library RM_ACT.
-NOTE: CASLIB rm_actsc for session MYSESSION will be mapped to SAS Library RM_ACTSC.
-NOTE: CASLIB rm_arm for session MYSESSION will be mapped to SAS Library RM_ARM.
-NOTE: CASLIB rm_bkt for session MYSESSION will be mapped to SAS Library RM_BKT.
-NOTE: CASLIB rm_bktsc for session MYSESSION will be mapped to SAS Library RM_BKTSC.
-NOTE: CASLIB rm_dbsc for session MYSESSION will be mapped to SAS Library RM_DBSC.
-NOTE: CASLIB rm_mdl for session MYSESSION will be mapped to SAS Library RM_MDL.
-NOTE: CASLIB rm_mdlsc for session MYSESSION will be mapped to SAS Library RM_MDLSC.
-NOTE: CASLIB rm_pbdst for session MYSESSION will be mapped to SAS Library RM_PBDST.
-NOTE: CASLIB rm_perf for session MYSESSION will be mapped to SAS Library RM_PERF.
-NOTE: CASLIB rm_rptmr for session MYSESSION will be mapped to SAS Library RM_RPTMR.
-NOTE: CASLIB rm_scr for session MYSESSION will be mapped to SAS Library RM_SCR.
-NOTE: CASLIB rm_scrsc for session MYSESSION will be mapped to SAS Library RM_SCRSC.
-651  
-652  
-653  /* LOAD CUSTOMERS DATASET TO CAS USING DATASTEP TO DEFAULt CAS LIBRARY */
-654  /* IN THIS CASE MYSAS2 CONTAINS DATASETS THAT WERE ENCODED TO UTF-8 */
-655  data mycas.mycustomers;
-656    set mysas.customers;
-657  run;
+640  
+641  
+642  /* LOAD CUSTOMERS DATASET TO CAS USING DATASTEP TO DEFAULt CAS LIBRARY */
+643  /* IN THIS CASE MYSAS2 CONTAINS DATASETS THAT WERE ENCODED TO UTF-8 */
+644  data mycas.mycustomers;
+645    set mysas.customers;
+ERROR: File MYSAS.CUSTOMERS.DATA does not exist.
+646  run;
 
-NOTE: There were 77 observations read from the data set MYSAS.CUSTOMERS.
-NOTE: The data set MYCAS.MYCUSTOMERS has 77 observations and 9 variables.
+ERROR: The table MYCAS.MYCUSTOMERS has no variables. Cloud Analytic Services requires at least one variable.
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: Due to ERROR(s) above, SAS set option OBS=0, enabling syntax check mode. 
+      This prevents execution of subsequent data modification statements.
+WARNING: The data set MYCAS.MYCUSTOMERS was only partially opened and will not be saved.
 NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+647  
+648  proc print data=mycas.mycustomers (obs=10);
+NOTE: The table MYCAS.MYCUSTOMERS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS.DATA does not exist.
+649  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+650  
+651  
+652  /* LOAD CUSTOMERS DATASET TO CAS USING PROC CASUTIL */
+
+
+653  proc casutil;
+654  	
+654!  load data=mysas.customers outcaslib='casuser'
+ERROR: File MYSAS.CUSTOMERS.DATA does not exist.
+655  	casout="mycustomers" replace;
+656  quit;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE CASUTIL used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+657  
+
+
+658  proc print data=mycas.mycustomers (obs=10);
+NOTE: The table MYCAS.MYCUSTOMERS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS.DATA does not exist.
+659  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
       cpu time            0.01 seconds
       
-
-658  
-659  proc print data=mycas.mycustomers (obs=10);
-660  run;
-
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.05 seconds
-      cpu time            0.05 seconds
-      
-
+660  title; footnote;
 661  
 662  
-663  /* LOAD CUSTOMERS DATASET TO CAS USING PROC CASUTIL */
+663  /* LOAD XLS FILE TO CAS USING PROC CASUTIL */
+
+
 664  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-665  	
-665!  load data=mysas.customers outcaslib='casuser'
-666  	casout="mycustomers" replace;
-NOTE: MYSAS.CUSTOMERS was successfully added to the "CASUSER(sasdemo)" caslib as "MYCUSTOMERS".
-667  quit;
+665      load file='/home/sasdemo/SAS Studio/DATA/customers.xlsx'
+666      casout='mycustomers2'
+667      outcaslib='casuser'
+668      importoptions=(filetype='excel' getnames=true)
+669      replace;
+670  quit;
 
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE CASUTIL used (Total process time):
       real time           0.00 seconds
       cpu time            0.00 seconds
       
+671  
 
-668  
-669  proc print data=mycas.mycustomers (obs=10);
-670  run;
 
+672  proc print data=mycas.mycustomers2 (obs=10);
+NOTE: The table MYCAS.MYCUSTOMERS2 does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS2.DATA does not exist.
+673  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.04 seconds
-      cpu time            0.04 seconds
+      real time           0.00 seconds
+      cpu time            0.00 seconds
       
-
-671  title; footnote;
-672  
-673  
-674  /* LOAD XLS FILE TO CAS USING PROC CASUTIL */
-675  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-676      load file='/home/sasdemo/SAS Studio/DATA/customers.xlsx'
-677      casout='mycustomers2'
-678      outcaslib='casuser'
-679      importoptions=(filetype='excel' getnames=true)
-680      replace;
-NOTE: Cloud Analytic Services made the uploaded file available as table MYCUSTOMERS2 in caslib CASUSER(sasdemo).
-NOTE: The table MYCUSTOMERS2 has been created in caslib CASUSER(sasdemo) from binary data uploaded to Cloud Analytic Services.
-681  quit;
-
-NOTE: PROCEDURE CASUTIL used (Total process time):
-      real time           4:53.03
-      cpu time            0.52 seconds
-      
-
+674  TITLE; FOOTNOTE;
+675  
+676  /* proc import datafile="/home/sasdemo/SAS Studio/DATA/customers.xlsx" */
+677  /*             dbms=xlsx */
+678  /*             out=mysas.customers2 */
+679  /*             replace; */
+680  /* run; */
+681  
 682  
-683  proc print data=mycas.mycustomers2 (obs=10);
-684  run;
+683  /* LOAD CSV FILE TO CAS USING PROC CASUTIL */
 
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.09 seconds
-      cpu time            0.07 seconds
-      
 
-685  TITLE; FOOTNOTE;
-686  
-687  /* proc import datafile="/home/sasdemo/SAS Studio/DATA/customers.xlsx" */
-688  /*             dbms=xlsx */
-689  /*             out=mysas.customers2 */
-690  /*             replace; */
-691  /* run; */
-692  
-693  
-694  /* LOAD CSV FILE TO CAS USING PROC CASUTIL */
-695  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-696      load file='/home/sasdemo/SAS Studio/DATA/sales.csv'
-697      casout='mysales'
-698      outcaslib='casuser'
-699      importoptions=(filetype='csv' getnames=true)
-700      replace;
-NOTE: Cloud Analytic Services made the uploaded file available as table MYSALES in caslib CASUSER(sasdemo).
-NOTE: The table MYSALES has been created in caslib CASUSER(sasdemo) from binary data uploaded to Cloud Analytic Services.
-701  quit;
+684  proc casutil;
+685      load file='/home/sasdemo/SAS Studio/DATA/sales.csv'
+686      casout='mysales'
+687      outcaslib='casuser'
+688      importoptions=(filetype='csv' getnames=true)
+689      replace;
+690  quit;
 
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE CASUTIL used (Total process time):
       real time           0.00 seconds
       cpu time            0.00 seconds
       
+691  
 
-702  
-703  proc print data=casuser.mysales (obs=10);
-704  run;
 
+692  proc print data=casuser.mysales (obs=10);
+NOTE: The table CASUSER.MYSALES does not exist in Cloud Analytic Services.
+ERROR: File CASUSER.MYSALES.DATA does not exist.
+693  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.04 seconds
-      cpu time            0.04 seconds
+      real time           0.00 seconds
+      cpu time            0.01 seconds
       
+694  TITLE; FOOTNOTE;
+695  
+696  
+697  /* LOADING DATA USING PROC SQL*/
 
-705  TITLE; FOOTNOTE;
-706  
-707  
-708  /* LOADING DATA USING PROC SQL*/
-709  proc sql;
-709!           create table mycas.benchmark as
-710       select Name, Team, Position, Salary, NHome
-711       from sashelp.baseball
-712       where nHome > 20
-713       order by nHome descending;
-NOTE: Table MYCAS.BENCHMARK created, with 51 rows and 5 columns.
 
-714  run;
+698  proc sql;
+NOTE: PROC SQL set option NOEXEC and will continue to check the syntax of statements.
+698!           create table mycas.benchmark as
+699       select Name, Team, Position, Salary, NHome
+700       from sashelp.baseball
+701       where nHome > 20
+702       order by nHome descending;
+NOTE: Statement not executed due to NOEXEC option.
+703  run;
 NOTE: PROC SQL statements are executed immediately; The RUN statement has no effect.
-715  
-716  
-717  /* USING PROC CASUTIL TO LIST TABLES ASSOCIATED WITH CASLIB */
+704  
+705  
+706  /* USING PROC CASUTIL TO LIST TABLES ASSOCIATED WITH CASLIB */
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE SQL used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.00 seconds
+      real time           0.00 seconds
+      cpu time            0.01 seconds
       
 
-718  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-719    list tables;
-NOTE: Cloud Analytic Services processed the combined requests in 0.001723 seconds.
-720    list files;
-NOTE: Cloud Analytic Services processed the combined requests in 0.00675 seconds.
-721  quit;
 
+707  proc casutil;
+708    list tables;
+709    list files;
+710  quit;
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE CASUTIL used (Total process time):
-      real time           0.08 seconds
-      cpu time            0.08 seconds
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+711  
+712  
+713   /* USE DATA STEP TO COUNT NA CUSTOMERS - ONE ANSWER AS SINGLE THREAD */
+
+
+714  data work.NACustomers;
+715    set mysas.customers2 end=eof;
+ERROR: File MYSAS.CUSTOMERS2.DATA does not exist.
+716    if continent="North America" then NACustomers+1;
+717    if eof then output;
+718    keep NACustomers;
+719  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.NACUSTOMERS may be incomplete.  When this step was stopped there were 0 observations and 1 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
       
 
-722  
+
+720  
+721  proc print data=work.NACustomers;
+722  run;
+
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
 723  
-724   /* USE DATA STEP TO COUNT NA CUSTOMERS - ONE ANSWER AS SINGLE THREAD */
-725  data work.NACustomers;
-726    set mysas.customers2 end=eof;
-727    if continent="North America" then NACustomers+1;
-728    if eof then output;
-729    keep NACustomers;
-730  run;
+724  
+725  /* USE CAS TO COUNT NA CUSTOMERS - ONE TOTAL FOR EACH THREAD */
+726  data mycas.NACustomers;
+727    set mycas.mycustomers2 end=eof;
+NOTE: The table MYCAS.MYCUSTOMERS2 does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS2.DATA does not exist.
+728    if continent="North America" then NA_SUM+1;
+729    if eof then output;
+730    keep NA_SUM;
+731  run;
 
-NOTE: There were 951669 observations read from the data set MYSAS.CUSTOMERS2.
-NOTE: The data set WORK.NACUSTOMERS has 1 observations and 1 variables.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set MYCAS.NACUSTOMERS may be incomplete.  When this step was stopped there were 0 observations and 1 variables.
+WARNING: Data set MYCAS.NACUSTOMERS was not replaced because this step was stopped.
 NOTE: DATA statement used (Total process time):
-      real time           3.17 seconds
-      cpu time            0.41 seconds
-      
-
-731  
-732  proc print data=work.NACustomers;
-733  run;
-
-NOTE: There were 1 observations read from the data set WORK.NACUSTOMERS.
-NOTE: PROCEDURE PRINT used (Total process time):
       real time           0.01 seconds
       cpu time            0.01 seconds
       
 
-734  
+
+732  
+733  proc print data=mycas.NACustomers;
+NOTE: The table MYCAS.NACUSTOMERS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.NACUSTOMERS.DATA does not exist.
+734  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
 735  
-736  /* USE CAS TO COUNT NA CUSTOMERS - ONE TOTAL FOR EACH THREAD */
-737  data mycas.NACustomers;
-738    set mycas.mycustomers2 end=eof;
-739    if continent="North America" then NA_SUM+1;
-740    if eof then output;
-741    keep NA_SUM;
-742  run;
+736  
+737  /* SUM TOTALS FOR EACH THREAD TO SINGLE TOTAL */
 
-NOTE: Running DATA step in Cloud Analytic Services.
-NOTE: The DATA step will run in multiple threads.
-NOTE: There were 951669 observations read from the table MYCUSTOMERS2 in caslib CASUSER(sasdemo).
-NOTE: The table NACustomers in caslib CASUSER(sasdemo) has 12 observations and 1 variables.
+
+738  data mycas.NAcustomers2 / single=yes;
+739     keep NA_TOTAL;
+740     set casuser.NACUSTOMERS end=eof;
+NOTE: The table CASUSER.NACUSTOMERS does not exist in Cloud Analytic Services.
+ERROR: File CASUSER.NACUSTOMERS.DATA does not exist.
+741     NA_TOTAL + NA_sum;
+742     if eof then output;
+743  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set MYCAS.NACUSTOMERS2 may be incomplete.  When this step was stopped there were 0 observations and 1 variables.
+WARNING: Data set MYCAS.NACUSTOMERS2 was not replaced because this step was stopped.
 NOTE: DATA statement used (Total process time):
-      real time           0.42 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
-743  
-744  proc print data=mycas.NACustomers;
-745  run;
+744  
+745  proc print data=mycas.NACustomers2;
+NOTE: The table MYCAS.NACUSTOMERS2 does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.NACUSTOMERS2.DATA does not exist.
+746  run;
 
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.03 seconds
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+747  
+748  
+749  /* USE SINGLE=YES TO FORCE RUNNING ON A SINGLE THREAD */
+
+
+750  data mycas.TestCustomers/single=YES;
+751    set mycas.mycustomers end=eof;
+NOTE: The table MYCAS.MYCUSTOMERS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS.DATA does not exist.
+752    if continent="North America" then NAcustomers+1;
+753    if eof then output;
+754    keep NAcustomers;
+755  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set MYCAS.TESTCUSTOMERS may be incomplete.  When this step was stopped there were 0 observations and 1 variables.
+WARNING: Data set MYCAS.TESTCUSTOMERS was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.02 seconds
       
 
-746  
-747  
-748  /* SUM TOTALS FOR EACH THREAD TO SINGLE TOTAL */
-749  data mycas.NAcustomers2 / single=yes;
-750     keep NA_TOTAL;
-751     set casuser.NACUSTOMERS end=eof;
-752     NA_TOTAL + NA_sum;
-753     if eof then output;
-754  run;
 
-NOTE: Running DATA step in Cloud Analytic Services.
-NOTE: There were 12 observations read from the table NACUSTOMERS in caslib CASUSER(sasdemo).
-NOTE: The table NAcustomers2 in caslib CASUSER(sasdemo) has 1 observations and 1 variables.
+756  
+757  proc print data=mycas.TestCustomers;
+NOTE: The table MYCAS.TESTCUSTOMERS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.TESTCUSTOMERS.DATA does not exist.
+758  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+759  
+760  
+761  /* BY GROUP PROCESSING IN SAS */
+
+
+762  proc sort data=mysas.customers2 out=customers_sorted;
+ERROR: File MYSAS.CUSTOMERS2.DATA does not exist.
+763    by Continent City;
+ERROR: No data set open to look up variables.
+ERROR: No data set open to look up variables.
+764  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.CUSTOMERS_SORTED may be incomplete.  When this step was stopped there were 0 observations and 0 
+         variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+765  
+
+
+766  data work.CityTotals;
+767     set customers_sorted (where=(city ne ' ')) end=last;
+ERROR: Variable city is not on file WORK.CUSTOMERS_SORTED.
+768     by Continent City;
+769     if first.City then
+770        do;
+771           TotalCost=0;
+772           numOrders=0;
+773        end;
+774     TotalCost+Cost;
+775     numOrders+1;
+776     if last.City;
+777     keep Continent City TotalCost numOrders;
+778     if last then put _threadid_= _nthreads_=;
+779  run;
+
+WARNING: The variable Continent in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable City in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.CITYTOTALS may be incomplete.  When this step was stopped there were 0 observations and 2 variables.
 NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+780  
+781  proc print data=work.CityTotals(obs=5);
+782  run;
+
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+783  
+784  
+785  /* BY GROUP PROCESSING IN CAS */
+786  data mycas.CityTotals;
+787     set mycas.mycustomers2(where=(city ne ' ')) end=last;
+NOTE: The table MYCAS.MYCUSTOMERS2 does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS2.DATA does not exist.
+788     by Continent City;
+789     if first.City then
+790        do;
+791           TotalCost=0;
+792           numOrders=0;
+793        end;
+794     TotalCost+Cost;
+795     numOrders+1;
+796     if last.City;
+797     keep Continent City TotalCost numOrders;
+798     if last then put _threadid_= _nthreads_=;
+799  run;
+
+WARNING: The variable Continent in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable City in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set MYCAS.CITYTOTALS may be incomplete.  When this step was stopped there were 0 observations and 2 variables.
+WARNING: Data set MYCAS.CITYTOTALS was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+800  
+801  proc print data=mycas.CityTotals(obs=5);
+NOTE: The table MYCAS.CITYTOTALS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.CITYTOTALS.DATA does not exist.
+802  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+803  
+804  
+805  /* ADD MSGLEVEL=i */
+806  options msglevel=i;
+807  
+808  TITLE;
+809  TITLE1 "CAS.CITYTOTALS (MSGLEVEL=I)";
+810  FOOTNOTE;
+811  FOOTNOTE1 "Generated by SAS (&_SASSERVERNAME, &SYSSCPL) on %TRIM(%QSYSFUNC(DATE(), NLDATE20.)) at %TRIM(%QSYSFUNC(TIME(),
+811! NLTIMAP25.))";
+812  
+813  
+
+
+814  proc print data=mycas.CityTotals;
+NOTE: The table MYCAS.CITYTOTALS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.CITYTOTALS.DATA does not exist.
+815     where city='Abbeville' and continent='North America'  ;
+WARNING: No data sets qualify for WHERE processing.
+816  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+817  options msglevel=n;
+818  
+819  
+820  /* RUN SAS 9 PROC IN CAS */
+
+
+821  proc sort data=mysas.customers2 out=by_CustGroup;
+ERROR: File MYSAS.CUSTOMERS2.DATA does not exist.
+822    by Customer_Group;
+ERROR: No data set open to look up variables.
+823  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.BY_CUSTGROUP may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+824  
+
+
+825  proc means data=by_CustGroup chartype mean std min max n range vardef=df;
+826  	var RetailPrice;
+ERROR: Variable RETAILPRICE not found.
+827  	output out=mysas.mycustomers_means mean=std=min=max=n=range= / autoname;
+ERROR: Library MYSAS does not exist.
+828  	by Customer_Group;
+ERROR: Variable CUSTOMER_GROUP not found.
+829  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+830  
+
+
+831  proc print data=mysas.mycustomers_means;
+ERROR: File MYSAS.MYCUSTOMERS_MEANS.DATA does not exist.
+832  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+833  
+834  
+
+
+835  proc means data=mycas.mycustomers2 chartype mean std min max n range vardef=df;
+NOTE: The table MYCAS.MYCUSTOMERS2 does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS2.DATA does not exist.
+836  	var RetailPrice;
+ERROR: No data set open to look up variables.
+837  	output out=mycas.mycustomers_means mean=std=min=max=n=range= / autoname;
+838  	by Customer_Group;
+ERROR: No data set open to look up variables.
+839  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set MYCAS.MYCUSTOMERS_MEANS may be incomplete.  When this step was stopped there were 0 observations and 0 
+         variables.
+WARNING: Data set MYCAS.MYCUSTOMERS_MEANS was not replaced because this step was stopped.
+NOTE: PROCEDURE MEANS used (Total process time):
       real time           0.01 seconds
       cpu time            0.00 seconds
       
+840  
 
-755  
-756  proc print data=mycas.NACustomers2;
-757  run;
 
+841  proc print data=mycas.mycustomers_means;
+NOTE: The table MYCAS.MYCUSTOMERS_MEANS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS_MEANS.DATA does not exist.
+842  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.02 seconds
-      cpu time            0.01 seconds
-      
-
-758  
-759  
-760  /* USE SINGLE=YES TO FORCE RUNNING ON A SINGLE THREAD */
-761  data mycas.TestCustomers/single=YES;
-762    set mycas.mycustomers end=eof;
-763    if continent="North America" then NAcustomers+1;
-764    if eof then output;
-765    keep NAcustomers;
-766  run;
-
-NOTE: Running DATA step in Cloud Analytic Services.
-NOTE: Variable continent is uninitialized.
-NOTE: There were 77 observations read from the table MYCUSTOMERS in caslib CASUSER(sasdemo).
-NOTE: The table TestCustomers in caslib CASUSER(sasdemo) has 1 observations and 1 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.02 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
+843  
+844  
+845  /* RUN CAS PROC */
 
-767  
-768  proc print data=mycas.TestCustomers;
-769  run;
 
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.02 seconds
+846  proc mdsummary data=mycas.mycustomers2;
+NOTE: The table MYCAS.MYCUSTOMERS2 does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS2.DATA does not exist.
+847    groupby Customer_Group;
+ERROR: No data set open to look up variables.
+848    var RetailPrice;
+ERROR: No data set open to look up variables.
+849    output out=mycas.mycustomers_mdsstats (replace=yes);
+850  quit;
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set MYCAS.MYCUSTOMERS_MDSSTATS may be incomplete.  When this step was stopped there were 0 observations and 0 
+         variables.
+WARNING: Data set MYCAS.MYCUSTOMERS_MDSSTATS was not replaced because this step was stopped.
+NOTE: PROCEDURE MDSUMMARY used (Total process time):
+      real time           0.00 seconds
       cpu time            0.01 seconds
       
-
-770  
-771  
-772  /* BY GROUP PROCESSING IN SAS */
-773  proc sort data=mysas.customers2 out=customers_sorted;
-774    by Continent City;
-775  run;
-
-NOTE: There were 951669 observations read from the data set MYSAS.CUSTOMERS2.
-NOTE: The data set WORK.CUSTOMERS_SORTED has 951669 observations and 24 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           1.02 seconds
-      cpu time            1.87 seconds
-      
-
-776  
-777  data work.CityTotals;
-778     set customers_sorted (where=(city ne ' ')) end=last;
-779     by Continent City;
-780     if first.City then
-781        do;
-782           TotalCost=0;
-783           numOrders=0;
-784        end;
-785     TotalCost+Cost;
-786     numOrders+1;
-787     if last.City;
-788     keep Continent City TotalCost numOrders;
-789     if last then put _threadid_= _nthreads_=;
-790  run;
-
-_THREADID_=1 _NTHREADS_=1
-NOTE: There were 951551 observations read from the data set WORK.CUSTOMERS_SORTED.
-      WHERE city not = ' ';
-NOTE: The data set WORK.CITYTOTALS has 10779 observations and 4 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.60 seconds
-      cpu time            0.57 seconds
-      
-
-791  
-792  proc print data=work.CityTotals(obs=5);
-793  run;
-
-NOTE: There were 5 observations read from the data set WORK.CITYTOTALS.
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.02 seconds
-      cpu time            0.02 seconds
-      
-
-794  
-795  
-796  /* BY GROUP PROCESSING IN CAS */
-797  data mycas.CityTotals;
-798     set mycas.mycustomers2(where=(city ne ' ')) end=last;
-799     by Continent City;
-800     if first.City then
-801        do;
-802           TotalCost=0;
-803           numOrders=0;
-804        end;
-805     TotalCost+Cost;
-806     numOrders+1;
-807     if last.City;
-808     keep Continent City TotalCost numOrders;
-809     if last then put _threadid_= _nthreads_=;
-810  run;
-
-NOTE: Running DATA step in Cloud Analytic Services.
-NOTE: The DATA step will run in multiple threads.
-_THREADID_=11 _NTHREADS_=12
-_THREADID_=7 _NTHREADS_=12
-_THREADID_=9 _NTHREADS_=12
-_THREADID_=12 _NTHREADS_=12
-_THREADID_=5 _NTHREADS_=12
-NOTE: There were 951551 observations read from the table MYCUSTOMERS2 in caslib CASUSER(sasdemo).
-NOTE: The table CityTotals in caslib CASUSER(sasdemo) has 10779 observations and 4 variables.
-NOTE: DATA statement used (Total process time):
-      real time           4:08.98
-      cpu time            0.23 seconds
-      
-
-811  
-812  proc print data=mycas.CityTotals(obs=5);
-813  run;
-
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.04 seconds
-      cpu time            0.02 seconds
-      
-
-814  
-815  
-816  /* ADD MSGLEVEL=i */
-817  options msglevel=i;
-818  
-819  TITLE;
-820  TITLE1 "CAS.CITYTOTALS (MSGLEVEL=I)";
-821  FOOTNOTE;
-822  FOOTNOTE1 "Generated by SAS (&_SASSERVERNAME, &SYSSCPL) on %TRIM(%QSYSFUNC(DATE(), NLDATE20.)) at %TRIM(%QSYSFUNC(TIME(),
-822! NLTIMAP25.))";
-823  
-824  
-825  proc print data=mycas.CityTotals;
-826     where city='Abbeville' and continent='North America'  ;
-NOTE:  The where clause is being processed by Cloud Analytic Services.
-827  run;
-
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.03 seconds
-      
-
-828  options msglevel=n;
-829  
-830  
-831  /* RUN SAS 9 PROC IN CAS */
-832  proc sort data=mysas.customers2 out=by_CustGroup;
-833    by Customer_Group;
-834  run;
-
-NOTE: There were 951669 observations read from the data set MYSAS.CUSTOMERS2.
-NOTE: The data set WORK.BY_CUSTGROUP has 951669 observations and 24 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.96 seconds
-      cpu time            1.76 seconds
-      
-
-835  
-836  proc means data=by_CustGroup chartype mean std min max n range vardef=df;
-837  	var RetailPrice;
-838  	output out=mysas.mycustomers_means mean=std=min=max=n=range= / autoname;
-839  	by Customer_Group;
-840  run;
-
-NOTE: There were 951669 observations read from the data set WORK.BY_CUSTGROUP.
-NOTE: The data set MYSAS.MYCUSTOMERS_MEANS has 3 observations and 9 variables.
-NOTE: PROCEDURE MEANS used (Total process time):
-      real time           0.44 seconds
-      cpu time            0.44 seconds
-      
-
-841  
-842  proc print data=mysas.mycustomers_means;
-843  run;
-
-NOTE: There were 3 observations read from the data set MYSAS.MYCUSTOMERS_MEANS.
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.02 seconds
-      cpu time            0.02 seconds
-      
-
-844  
-845  
-846  proc means data=mycas.mycustomers2 chartype mean std min max n range vardef=df;
-847  	var RetailPrice;
-848  	output out=mycas.mycustomers_means mean=std=min=max=n=range= / autoname;
-849  	by Customer_Group;
-850  run;
-
-NOTE: The CAS aggregation.aggregate action will be used to perform the initial summarization.
-NOTE: The data set MYCAS.MYCUSTOMERS_MEANS has 3 observations and 9 variables.
-NOTE: PROCEDURE MEANS used (Total process time):
-      real time           0.82 seconds
-      cpu time            0.07 seconds
-      
-
 851  
-852  proc print data=mycas.mycustomers_means;
+
+
+852  proc print data=mycas.mycustomers_mdsstats;
+NOTE: The table MYCAS.MYCUSTOMERS_MDSSTATS does not exist in Cloud Analytic Services.
+ERROR: File MYCAS.MYCUSTOMERS_MDSSTATS.DATA does not exist.
 853  run;
 
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.02 seconds
+      real time           0.00 seconds
+      cpu time            0.00 seconds
       
-
 854  
 855  
-856  /* RUN CAS PROC */
-857  proc mdsummary data=mycas.mycustomers2;
-858    groupby Customer_Group;
-859    var RetailPrice;
-860    output out=mycas.mycustomers_mdsstats (replace=yes);
-861  quit;
 
-NOTE: The Cloud Analytic Services server processed the request in 0.094129 seconds.
-NOTE: The data set MYCAS.MYCUSTOMERS_MDSSTATS has 3 observations and 19 variables.
-NOTE: PROCEDURE MDSUMMARY used (Total process time):
-      real time           0.11 seconds
-      cpu time            0.00 seconds
-      
 
-862  
-863  proc print data=mycas.mycustomers_mdsstats;
-864  run;
-
-NOTE: PROCEDURE PRINT used (Total process time):
-      real time           0.04 seconds
-      cpu time            0.04 seconds
-      
-
-865  
-866  
-867  proc sql;
-868     select Customer_Name
-869          , City
-870          , (quantity*retailPrice) as TotalPaid format=dollar9.2
-871       from mysas.customers2
-872       where calculated TotalPaid>2000
-873         and Continent eq 'Africa'
-874       order by City
-875       ;
-876  quit;
+856  proc sql;
+NOTE: PROC SQL set option NOEXEC and will continue to check the syntax of statements.
+857     select Customer_Name
+858          , City
+859          , (quantity*retailPrice) as TotalPaid format=dollar9.2
+860       from mysas.customers2
+861       where calculated TotalPaid>2000
+862         and Continent eq 'Africa'
+863       order by City
+864       ;
+ERROR: File MYSAS.CUSTOMERS2.DATA does not exist.
+865  quit;
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE SQL used (Total process time):
-      real time           0.34 seconds
-      cpu time            0.34 seconds
+      real time           0.00 seconds
+      cpu time            0.01 seconds
       
+866  
 
-877  
-878  proc fedsql sessref=Mysession;
-879  create table casuser.InvoiceAfrica as
-880     select Customer_Name
-881          , City
-882          , put((quantity*retailPrice),dollar9.2) as TotalPaid
-883       from casuser.mycustomers2
-884       where (quantity*retailPrice)>2000
-885         and Continent='Africa'
-886  ;
-NOTE: CASDAL driver. Creation of an NVARCHAR column has been requested, but is not supported by the CASDAL driver. A VARCHAR column 
-will be created instead.
-NOTE: Table INVOICEAFRICA was created in caslib CASUSER(sasdemo) with 27 rows returned.
-887  select *
-888     from casuser.InvoiceAfrica
-889     order by City
-890  ;
-891  quit;
 
+867  proc fedsql sessref=Mysession;
+868  create table casuser.InvoiceAfrica as
+869     select Customer_Name
+870          , City
+871          , put((quantity*retailPrice),dollar9.2) as TotalPaid
+872       from casuser.mycustomers2
+873       where (quantity*retailPrice)>2000
+874         and Continent='Africa'
+875  ;
+ERROR: Table "CASUSER.MYCUSTOMERS2" does not exist or cannot be accessed
+ERROR: The action stopped due to errors.
+ERROR: The FedSQL action was not successful.
+NOTE: PROC FEDSQL has set option NOEXEC and will continue to prepare statements.
+876  select *
+877     from casuser.InvoiceAfrica
+878     order by City
+879  ;
+ERROR: Table "CASUSER.INVOICEAFRICA" does not exist or cannot be accessed
+ERROR: The action stopped due to errors.
+ERROR: The FedSQL action was not successful.
+880  quit;
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE FEDSQL used (Total process time):
-      real time           0.16 seconds
-      cpu time            0.05 seconds
+      real time           0.04 seconds
+      cpu time            0.01 seconds
       
+881  
 
-892  
-893  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-894     contents casdata="InvoiceAfrica" incaslib="casuser";
-NOTE: Cloud Analytic Services processed the combined requests in 0.002275 seconds.
-895  run;
 
-896  
-897  
-898  
+882  proc casutil;
+883     contents casdata="InvoiceAfrica" incaslib="casuser";
+884  run;
 
+885  
+886  
+887  
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE CASUTIL used (Total process time):
-      real time           0.08 seconds
-      cpu time            0.07 seconds
-      
-
-899  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-900    save casdata="mycustomers2" incaslib="casuser" replace;
-NOTE: Cloud Analytic Services saved the file mycustomers2.sashdat in caslib CASUSER(sasdemo).
-NOTE: The Cloud Analytic Services server processed the request in 1.312415 seconds.
-901  quit;
-
-NOTE: PROCEDURE CASUTIL used (Total process time):
-      real time           1.31 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
-902  
-903  proc casutil;
-NOTE: The UUID 'b76f1848-20fc-7f4e-8784-202278e8eb8a' is connected using session MYSESSION.
-904    droptable casdata="Mycustomers2" incaslib="casuser";
-NOTE: Cloud Analytic Services dropped table Mycustomers2 from caslib CASUSER(sasdemo).
-NOTE: The Cloud Analytic Services server processed the request in 0.058444 seconds.
-905  quit;
 
+888  proc casutil;
+889    save casdata="mycustomers2" incaslib="casuser" replace;
+890  quit;
+
+NOTE: The SAS System stopped processing this step because of errors.
 NOTE: PROCEDURE CASUTIL used (Total process time):
-      real time           0.06 seconds
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+891  
+
+
+892  proc casutil;
+893    droptable casdata="Mycustomers2" incaslib="casuser";
+894  quit;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE CASUTIL used (Total process time):
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
-
-906  
-907  cas mySession terminate;
-NOTE: Libref RM_SCRSC has been deassigned.
-NOTE: Libref RM_SCR has been deassigned.
-NOTE: Libref RM_RPTMR has been deassigned.
-NOTE: Libref RM_PERF has been deassigned.
-NOTE: Libref RM_PBDST has been deassigned.
-NOTE: Libref RM_MDLSC has been deassigned.
-NOTE: Libref RM_MDL has been deassigned.
-NOTE: Libref RM_DBSC has been deassigned.
-NOTE: Libref RM_BKTSC has been deassigned.
-NOTE: Libref RM_BKT has been deassigned.
-NOTE: Libref RM_ARM has been deassigned.
-NOTE: Libref RM_ACTSC has been deassigned.
-NOTE: Libref RM_ACT has been deassigned.
+895  
+896  cas mySession terminate;
 NOTE: Libref SAMPLES has been deassigned.
-NOTE: Libref SGF20 has been deassigned.
 NOTE: Libref PUBLIC has been deassigned.
 NOTE: Libref MODELS has been deassigned.
-NOTE: Libref MODELOPS has been deassigned.
 NOTE: Libref FORMATS has been deassigned.
 NOTE: Libref CASUSER has been deassigned.
 NOTE: Libref MYCAS has been deassigned.
@@ -900,7 +792,10 @@ NOTE: Deletion of the session MYSESSION was successful.
 NOTE: The default CAS session MYSESSION identified by SAS option SESSREF= was terminated. Use the OPTIONS statement to set the 
       SESSREF= option to an active session.
 NOTE: Request to TERMINATE completed for session MYSESSION.
-908  
-909  
-910  %studio_hide_wrapper;
+897  
+898  
+899  
+900  %studio_hide_wrapper;
+910  
+911  
 
