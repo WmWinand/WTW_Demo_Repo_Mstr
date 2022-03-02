@@ -9,6 +9,13 @@ data _null_;
 run;
 
 data _null_;
+   n = git_status("/home/sasdemo/WTW_Demo_Repo");                                      															/**/
+   rc = git_index_add("/home/sasdemo/WTW_Demo_Repo", "BaseSAS_GitFcns.sas", "file1-status");   /**/
+   rc = git_status_free("/home/sasdemo/WTW_Demo_Repo");
+   n = git_status("/home/sasdemo/WTW_Demo_Repo");                                      															/**/
+run;
+
+data _null_;
  rc = git_commit(
     "/home/sasdemo/WTW_Demo_Repo",
     "HEAD",
