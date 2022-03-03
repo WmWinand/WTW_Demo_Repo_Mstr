@@ -1,7 +1,11 @@
+/****************************************************/
+/* Program with Base SAS Git functions for my repos */
+/****************************************************/
+
+
 /*******************************************/
-/* Program with Base SAS Git functions for */
-/* WTW_Demo_Repo                           */
-/*******************************************/
+/*           SS4_ESP_LocalRepo             */
+/*******************************************/     
 
 data _null_;
     n = git_status("/home/sasdemo/WTW_Demo_Repo");
@@ -25,10 +29,47 @@ data _null_;
    put rc=;
 run;
 
-/* Git Push Using SSH Keys */
+/* Git Push WTW_DemoRepo Using SSH Keys */
 data _null_;
  rc= git_push(
   "/home/sasdemo/WTW_Demo_Repo",
+  "git",
+  "",
+  "/home/sasdemo/SSH_Keys/id_rsa.pub",
+  "/home/sasdemo/SSH_Keys/id_rsa");
+run;
+
+
+
+/*******************************************/
+/*           SS4_ESP_LocalRepo             */
+/*******************************************/      
+
+data _null_;
+    n = git_status("/home/sasdemo/SS4_ESP_LocalRepo");
+    put n=;
+run;
+
+data _null_;
+   n = git_status("/home/sasdemo/SS4_ESP_LocalRepo");                                      															/**/
+   rc = git_index_add("/home/sasdemo/WTW_Demo_Repo", "file1", "file2");
+   rc = git_status_free("/home/sasdemo/SS4_ESP_LocalRepo");
+   n = git_status("/home/sasdemo/SS4_ESP_LocalRepo");                                      															/**/
+run;
+
+data _null_;
+ rc = git_commit(
+    "/home/sasdemo/SS4_ESP_LocalRepo",
+    "HEAD",
+    "William Winand",
+    "t.winand@sas.com",
+    "Updated BaseSAS_GitFcns with new functions");           /**/
+   put rc=;
+run;
+
+data _null_;
+ rc= git_push(
+  "/home/sasdemo/SS4_ESP_LocalRepo",
   "git",
   "",
   "/home/sasdemo/SSH_Keys/id_rsa.pub",
