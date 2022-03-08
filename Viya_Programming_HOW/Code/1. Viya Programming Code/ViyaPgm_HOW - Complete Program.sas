@@ -50,7 +50,7 @@ caslib _all_ list;
 
 libname mycas cas caslib=casuser;
 
-%let path=/home/sasdemo/WTW_Examples/Data;
+%let path=/home/sasdemo/WTW_Demo_Repo_SSH/data;
 libname mysas "&path"; 
 
 
