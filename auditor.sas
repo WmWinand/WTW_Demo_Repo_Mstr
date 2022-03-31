@@ -42,4 +42,7 @@ data measurements;
      drop rc dsid; 
 run;
 
+proc print data=measurements;
+  run;
+
 
